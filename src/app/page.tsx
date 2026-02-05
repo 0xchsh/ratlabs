@@ -28,7 +28,7 @@ export default function Home() {
   }, [handleKeyDown]);
 
   return (
-    <div className="flex h-screen items-center justify-center bg-black p-6">
+    <div className="flex h-screen items-center justify-center bg-black" style={{ padding: "clamp(16px, 2vw, 40px)" }}>
       <svg className="absolute h-0 w-0">
         <defs>
           <filter id="crt-barrel">
@@ -38,18 +38,18 @@ export default function Home() {
         </defs>
       </svg>
 
-      <div className="crt-screen crt-warp flex h-full w-full max-w-4xl flex-col items-center justify-center gap-6 bg-bg">
+      <div className="crt-screen crt-warp flex h-full w-full flex-col items-center justify-center bg-bg" style={{ gap: "clamp(16px, 3vh, 48px)" }}>
         <div className="crt-scanroll" />
-        <div className="crt-content flex w-full flex-col items-center gap-6 px-8">
+        <div className="crt-content flex w-full flex-col items-center" style={{ gap: "clamp(16px, 3vh, 48px)" }}>
           <AsciiBanner />
 
           <ProjectTree selected={selected} onSelect={setSelected} />
 
-          <div className="flex flex-col items-center gap-1">
-            <p className="text-text-tertiary text-xs font-mono">
+          <div className="flex flex-col items-center gap-1" style={{ fontSize: "clamp(10px, 1vw, 16px)" }}>
+            <p className="text-text-tertiary font-mono">
               navigate with <span className="text-text-secondary">arrow keys</span>
             </p>
-            <footer className="text-text-tertiary text-xs font-mono text-center">
+            <footer className="text-text-tertiary font-mono text-center">
               <span>&copy; {new Date().getFullYear()} Rat Labs</span>
             </footer>
           </div>

@@ -15,14 +15,14 @@ export function ProjectIcon({ name, inverted }: { name: string; inverted?: boole
   const src = iconMap[name];
   if (!src) return null;
   return (
-    <span className="inline-flex items-center justify-center w-4 h-4 mr-1.5 align-middle" style={{ display: "inline-flex" }}>
+    <span className="inline-flex items-center justify-center mr-[0.4em] align-middle" style={{ display: "inline-flex", width: "1.2em", height: "1.2em" }}>
       <Image
         src={src}
         alt={name}
-        width={12}
-        height={12}
+        width={16}
+        height={16}
         className={`object-contain ${inverted ? "invert" : ""}`}
-        style={{ width: 12, height: 12 }}
+        style={{ width: "1em", height: "1em" }}
       />
     </span>
   );

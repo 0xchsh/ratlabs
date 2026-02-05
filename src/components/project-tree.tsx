@@ -35,7 +35,7 @@ export function ProjectTree({ selected, onSelect }: ProjectTreeProps) {
   let projectIndex = 0;
 
   return (
-    <div className="w-full max-w-md text-xs font-mono">
+    <div className="w-full font-mono" style={{ maxWidth: "clamp(280px, 40vw, 600px)", fontSize: "clamp(10px, 1.1vw, 18px)" }}>
       {tree.map((group, gi) => {
         const isLastFolder = gi === tree.length - 1;
         const folderPrefix = isLastFolder ? "└ " : "├ ";
