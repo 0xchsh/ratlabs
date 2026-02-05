@@ -4,6 +4,10 @@ import { ProjectIcon } from "./project-icons";
 
 const tree = [
   {
+    folder: "ai",
+    projects: [{ name: "Algernon", desc: "24/7 coding rat" }],
+  },
+  {
     folder: "crypto",
     projects: [
       { name: "RGB", desc: "Onchain color protocol" },
@@ -14,10 +18,6 @@ const tree = [
       { name: "Nounhood", desc: "Generative art collection" },
       { name: "Nounable", desc: "Nounish goods & merch" },
     ],
-  },
-  {
-    folder: "ai",
-    projects: [{ name: "Algernon", desc: "24/7 coding rat" }],
   },
 ];
 
@@ -36,24 +36,18 @@ export function ProjectTree({ selected, onSelect }: ProjectTreeProps) {
 
   return (
     <div className="w-full font-mono" style={{ maxWidth: "clamp(280px, 40vw, 600px)", fontSize: "clamp(10px, 1.1vw, 18px)" }}>
-      {tree.map((group, gi) => {
-        const isLastFolder = gi === tree.length - 1;
-        const folderPrefix = isLastFolder ? "└ " : "├ ";
-
+      {tree.map((group) => {
         return (
           <div key={group.folder}>
             {/* Folder header — not selectable */}
             <div className="py-0.5 px-1 text-text-secondary -mx-[50vw] px-[50vw]">
-              <span className="inline-block" style={{ fontFamily: "'JetBrains Mono', monospace", width: "4ch" }}>{folderPrefix}</span>{group.folder}/
+              {group.folder}/
             </div>
 
             {/* Project items — selectable */}
-            {group.projects.map((project, pi) => {
+            {group.projects.map((project) => {
               const idx = projectIndex++;
               const isSelected = selected === idx;
-              const isLast = pi === group.projects.length - 1;
-              const parentPre = isLastFolder ? "  " : "│ ";
-              const childPre = isLast ? "└ " : "├ ";
 
               return (
                 <div
@@ -65,9 +59,6 @@ export function ProjectTree({ selected, onSelect }: ProjectTreeProps) {
                       : "text-text-primary hover:bg-text-primary/10"
                   }`}
                 >
-                  <span className={`inline-block ${isSelected ? "text-bg" : "text-text-tertiary"}`} style={{ fontFamily: "'JetBrains Mono', monospace", width: "4ch" }}>
-                    {parentPre}{childPre}
-                  </span>
                   <ProjectIcon name={project.name} inverted={isSelected} />{project.name}
                   {project.desc && (
                     <span className={`ml-2 ${isSelected ? "text-bg/60" : "text-text-tertiary"}`}>

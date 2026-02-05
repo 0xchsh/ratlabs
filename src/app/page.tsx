@@ -38,21 +38,21 @@ export default function Home() {
         </defs>
       </svg>
 
-      <div className="crt-screen crt-warp flex h-full w-full flex-col items-center justify-center bg-bg" style={{ gap: "clamp(16px, 3vh, 48px)" }}>
+      <div className="crt-screen crt-warp flex h-full w-full flex-col items-center bg-bg">
         <div className="crt-scanroll" />
-        <div className="crt-content flex w-full flex-col items-center" style={{ gap: "clamp(16px, 3vh, 48px)" }}>
+        <div className="crt-content flex w-full flex-1 flex-col items-center justify-center" style={{ gap: "clamp(16px, 3vh, 48px)" }}>
           <AsciiBanner />
 
           <ProjectTree selected={selected} onSelect={setSelected} />
+        </div>
 
-          <div className="flex flex-col items-center gap-1" style={{ fontSize: "clamp(10px, 1vw, 16px)" }}>
-            <p className="text-text-tertiary font-mono">
-              navigate with <span className="text-text-secondary">arrow keys</span>
-            </p>
-            <footer className="text-text-tertiary font-mono text-center">
-              <span>&copy; {new Date().getFullYear()} Rat Labs</span>
-            </footer>
-          </div>
+        <div className="crt-content flex flex-col items-center gap-1" style={{ fontSize: "clamp(10px, 1vw, 16px)", paddingBottom: "clamp(16px, 3vh, 40px)" }}>
+          <p className="text-text-tertiary font-mono">
+            navigate with <span className="text-text-secondary">arrow keys</span>
+          </p>
+          <footer className="text-text-tertiary font-mono text-center">
+            <span>&copy; {new Date().getFullYear()} Rat Labs</span>
+          </footer>
         </div>
       </div>
     </div>

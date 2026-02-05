@@ -11,6 +11,12 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Rat Labs",
   description: "Rat Labs — Brooklyn, NY",
+  icons: {
+    icon: "/images/favicon.png",
+  },
+  openGraph: {
+    images: ["/images/og-image.png"],
+  },
 };
 
 export default function RootLayout({

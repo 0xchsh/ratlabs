@@ -1,14 +1,14 @@
 import Image from "next/image";
 
 const iconMap: Record<string, string> = {
-  "RGB": "/icons/06.svg",
-  "Noundation": "/icons/04.svg",
-  "Gerund": "/icons/03.svg",
-  "Squads": "/icons/01.svg",
-  "Lag Sucks": "/icons/02.svg",
-  "Nounhood": "/icons/05.svg",
-  "Nounable": "/icons/07.svg",
-  "Algernon": "/icons/algernon.png",
+  "RGB": "/images/06.svg",
+  "Noundation": "/images/04.svg",
+  "Gerund": "/images/03.svg",
+  "Squads": "/images/01.svg",
+  "Lag Sucks": "/images/02.svg",
+  "Nounhood": "/images/05.svg",
+  "Nounable": "/images/07.svg",
+  "Algernon": "/images/algernon.png",
 };
 
 export function ProjectIcon({ name, inverted }: { name: string; inverted?: boolean }) {
