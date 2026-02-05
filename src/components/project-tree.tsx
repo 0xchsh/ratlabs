@@ -1,25 +1,6 @@
 "use client";
 
-interface Project {
-  name: string;
-  desc: string;
-}
-
-function Win95Folder({ inverted }: { inverted?: boolean }) {
-  return (
-    <svg
-      width="14"
-      height="12"
-      viewBox="0 0 16 14"
-      fill="none"
-      className="inline-block align-middle -mt-0.5 mr-1"
-    >
-      <path d="M0 2V13H16V4H7L5 2H0Z" fill={inverted ? "#0a0a0a" : "#FFCC33"} />
-      <path d="M0 2H5L7 4H16V5H0V2Z" fill={inverted ? "#1a1a1a" : "#FFE680"} />
-      <path d="M0 2V13H16V4H7L5 2H0Z" stroke={inverted ? "#333" : "#CC9900"} strokeWidth="0.5" />
-    </svg>
-  );
-}
+import { ProjectIcon } from "./project-icons";
 
 const tree = [
   {
@@ -36,31 +17,14 @@ const tree = [
   },
   {
     folder: "ai",
-    projects: [{ name: "Coming soon", desc: "" }],
+    projects: [{ name: "Algernon", desc: "24/7 coding rat" }],
   },
 ];
 
-// Flatten tree into a selectable list with indices
-function flatItems() {
-  const items: { type: "folder" | "item"; label: string; desc?: string; isLast: boolean; folderIdx: number; isLastFolder: boolean }[] = [];
-  tree.forEach((group, gi) => {
-    const isLastFolder = gi === tree.length - 1;
-    items.push({ type: "folder", label: group.folder, isLast: false, folderIdx: gi, isLastFolder });
-    group.projects.forEach((p, pi) => {
-      items.push({
-        type: "item",
-        label: p.name,
-        desc: p.desc,
-        isLast: pi === group.projects.length - 1,
-        folderIdx: gi,
-        isLastFolder,
-      });
-    });
-  });
-  return items;
+// Get only project items (no folders) for navigation
+export function getProjectCount() {
+  return tree.reduce((acc, g) => acc + g.projects.length, 0);
 }
-
-const items = flatItems();
 
 interface ProjectTreeProps {
   selected: number;
@@ -68,51 +32,51 @@ interface ProjectTreeProps {
 }
 
 export function ProjectTree({ selected, onSelect }: ProjectTreeProps) {
+  let projectIndex = 0;
+
   return (
-    <div className="w-full max-w-md font-mono text-xs">
-      <div className="text-text-tertiary mb-1">.</div>
-      {items.map((item, i) => {
-        const isSelected = selected === i;
-
-        if (item.type === "folder") {
-          const prefix = item.isLastFolder ? "└── " : "├── ";
-          return (
-            <div
-              key={`folder-${item.label}`}
-              onClick={() => onSelect(i)}
-              className={`cursor-pointer py-0.5 px-1 transition-colors -mx-[50vw] px-[50vw] ${
-                isSelected
-                  ? "bg-text-primary text-bg"
-                  : "text-text-secondary hover:bg-text-primary/10"
-              }`}
-            >
-              {prefix}<Win95Folder inverted={isSelected} /> {item.label}/
-            </div>
-          );
-        }
-
-        const parentPrefix = item.isLastFolder ? "    " : "│   ";
-        const childPrefix = item.isLast ? "└── " : "├── ";
+    <div className="w-full max-w-md text-xs font-mono">
+      {tree.map((group, gi) => {
+        const isLastFolder = gi === tree.length - 1;
+        const folderPrefix = isLastFolder ? "└ " : "├ ";
 
         return (
-          <div
-            key={`item-${item.label}`}
-            onClick={() => onSelect(i)}
-            className={`cursor-pointer py-0.5 px-1 transition-colors -mx-[50vw] px-[50vw] ${
-              isSelected
-                ? "bg-text-primary text-bg"
-                : "text-text-primary hover:bg-text-primary/10"
-            }`}
-          >
-            <span className={isSelected ? "text-bg" : "text-text-tertiary"}>
-              {parentPrefix}{childPrefix}
-            </span>
-            {item.label}
-            {item.desc && (
-              <span className={`ml-2 ${isSelected ? "text-bg/60" : "text-text-tertiary"}`}>
-                {item.desc}
-              </span>
-            )}
+          <div key={group.folder}>
+            {/* Folder header — not selectable */}
+            <div className="py-0.5 px-1 text-text-secondary -mx-[50vw] px-[50vw]">
+              <span className="inline-block" style={{ fontFamily: "'JetBrains Mono', monospace", width: "4ch" }}>{folderPrefix}</span>{group.folder}/
+            </div>
+
+            {/* Project items — selectable */}
+            {group.projects.map((project, pi) => {
+              const idx = projectIndex++;
+              const isSelected = selected === idx;
+              const isLast = pi === group.projects.length - 1;
+              const parentPre = isLastFolder ? "  " : "│ ";
+              const childPre = isLast ? "└ " : "├ ";
+
+              return (
+                <div
+                  key={project.name}
+                  onClick={() => onSelect(idx)}
+                  className={`cursor-pointer py-0.5 px-1 transition-colors -mx-[50vw] px-[50vw] ${
+                    isSelected
+                      ? "bg-text-primary text-bg"
+                      : "text-text-primary hover:bg-text-primary/10"
+                  }`}
+                >
+                  <span className={`inline-block ${isSelected ? "text-bg" : "text-text-tertiary"}`} style={{ fontFamily: "'JetBrains Mono', monospace", width: "4ch" }}>
+                    {parentPre}{childPre}
+                  </span>
+                  <ProjectIcon name={project.name} inverted={isSelected} />{project.name}
+                  {project.desc && (
+                    <span className={`ml-2 ${isSelected ? "text-bg/60" : "text-text-tertiary"}`}>
+                      {project.desc}
+                    </span>
+                  )}
+                </div>
+              );
+            })}
           </div>
         );
       })}

@@ -2,24 +2,24 @@
 
 import { useEffect, useCallback, useState } from "react";
 import { AsciiBanner } from "@/components/ascii-banner";
-import { ProjectTree } from "@/components/project-tree";
+import { ProjectTree, getProjectCount } from "@/components/project-tree";
 
 export default function Home() {
   const [selected, setSelected] = useState(0);
 
-  const totalItems = 10; // 2 folders + 8 items
+  const total = getProjectCount();
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === "ArrowUp") {
         e.preventDefault();
-        setSelected((prev) => (prev - 1 + totalItems) % totalItems);
+        setSelected((prev) => (prev - 1 + total) % total);
       } else if (e.key === "ArrowDown") {
         e.preventDefault();
-        setSelected((prev) => (prev + 1) % totalItems);
+        setSelected((prev) => (prev + 1) % total);
       }
     },
-    [totalItems]
+    [total]
   );
 
   useEffect(() => {
